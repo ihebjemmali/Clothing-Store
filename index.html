@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fashion Shop</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Fashion Shop</h1>
+    </header>
+
+    <nav>
+      <button onclick="showCollection('mensCollection')">
+        Men's Collection
+      </button>
+      <button onclick="showCollection('womensCollection')">
+        Women's Collection
+      </button>
+      <button onclick="showCollection('stockCollection')">
+        Stock Collection
+      </button>
+    </nav>
+
+    <section>
+      <h2>Search Items</h2>
+      <input type="text" id="search" placeholder="Search items" />
+      <button onclick="searchItems()">Search</button>
+    </section>
+
+    <section>
+      <h2>Add Item</h2>
+      <input type="text" id="addItemName" placeholder="Enter item name" />
+      <button onclick="addItem()">Add Item</button>
+    </section>
+
+    <section>
+      <h2>Remove Item</h2>
+      <input type="text" id="removeItemName" placeholder="Enter item name" />
+      <button onclick="removeItem()">Remove Item</button>
+    </section>
+
+    <section>
+      <h2>Edit Item</h2>
+      <input type="text" id="editItemName" placeholder="Enter item name" />
+      <input type="number" id="editItemPrice" placeholder="Enter new price" />
+      <input
+        type="number"
+        id="editItemQuantity"
+        placeholder="Enter new quantity"
+      />
+      <button onclick="editItem()">Edit Item</button>
+    </section>
+
+    <section>
+      <h2>Add to Favorites</h2>
+      <input type="text" id="favoriteItemName" placeholder="Enter item name" />
+      <button onclick="addToFavorites()">Add to Favorites</button>
+    </section>
+
+    <section id="itemsContainer">
+      <h2>Items</h2>
+    </section>
+    <h2>Favorites</h2>
+    <section id="favoritesContainer"></section>
+    <script src="main.js"></script>
+  </body>
+</html>
