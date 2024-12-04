@@ -1,3 +1,4 @@
+// Collections
 var mensCollection = [
   ClothingItem(
     "Men's Jeans",
@@ -153,6 +154,7 @@ var stockCollection = [
 
 var favoriteCollection = [];
 
+// ClothingItem constructor
 function ClothingItem(name, price, description, color, size, quantity, image) {
   return {
     name: name,
@@ -165,145 +167,141 @@ function ClothingItem(name, price, description, color, size, quantity, image) {
   };
 }
 
+// Display items
 function displayItems(collection, containerId) {
   var container = document.getElementById(containerId);
   container.innerHTML = "";
-  for (var i = 0; i < collection.length; i++) {
-    var item = collection[i];
-
+  collection.forEach(function (item) {
     var itemDiv = document.createElement("div");
     itemDiv.className = "item";
-    var inneritemDiv = document.createElement("div");
-    inneritemDiv.className = "inneritem";
-
-    var itemName = document.createElement("h3");
-    itemName.textContent = item.name;
-
-    var itemPrice = document.createElement("p");
-    itemPrice.textContent = "Price: $" + item.price;
-
-    var itemDescription = document.createElement("p");
-    itemDescription.textContent = "Description: " + item.description;
-
-    var itemColor = document.createElement("p");
-    itemColor.textContent = "Color: " + item.color;
-
-    var itemSize = document.createElement("p");
-    itemSize.textContent = "Size: " + item.size;
-
-    var itemQuantity = document.createElement("p");
-    itemQuantity.textContent = "Quantity: " + item.quantity;
-
-    var itemImage = document.createElement("img");
-    itemImage.src = item.image;
-
-    itemDiv.appendChild(itemImage);
-    inneritemDiv.appendChild(itemName);
-    inneritemDiv.appendChild(itemPrice);
-    inneritemDiv.appendChild(itemColor);
-    inneritemDiv.appendChild(itemSize);
-    inneritemDiv.appendChild(itemQuantity);
-    inneritemDiv.appendChild(itemDescription);
-    itemDiv.appendChild(inneritemDiv);
+    itemDiv.innerHTML =
+      '<img src="' +
+      item.image +
+      '" alt="' +
+      item.name +
+      '">' +
+      '<div class="inneritem">' +
+      "<h3>" +
+      item.name +
+      "</h3>" +
+      "<p>Price: $" +
+      item.price.toFixed(2) +
+      "</p>" +
+      "<p>Color: " +
+      item.color +
+      "</p>" +
+      "<p>Size: " +
+      item.size +
+      "</p>" +
+      "<p>Quantity: " +
+      item.quantity +
+      "</p>" +
+      "<p>Description: " +
+      item.description +
+      "</p>" +
+      "</div>";
     container.appendChild(itemDiv);
-  }
-}
-
-function showCollection(collectionName) {
-  var collection;
-
-  if (collectionName === "mensCollection") {
-    collection = mensCollection;
-  } else if (collectionName === "womensCollection") {
-    collection = womensCollection;
-  } else if (collectionName === "stockCollection") {
-    collection = stockCollection;
-  } else {
-    collection = [];
-  }
-
-  displayItems(collection, "itemsContainer");
-}
-
-function addItem() {
-  var itemName = document.getElementById("addItemName").value;
-  addItemToCollection(stockCollection, itemName);
-  displayItems(stockCollection, "itemsContainer");
-}
-
-function addItemToCollection(collection, itemName) {
-  for (var i = 0; i < stockCollection.length; i++) {
-    if (stockCollection[i].name === itemName) {
-      collection.push(stockCollection[i]);
-      return;
-    }
-  }
-}
-
-function removeItem() {
-  var itemName = document.getElementById("removeItemName").value;
-  removeItemFromCollection(mensCollection, itemName);
-  displayItems(mensCollection, "itemsContainer");
-}
-
-function removeItemFromCollection(collection, itemName) {
-  for (var i = 0; i < collection.length; i++) {
-    if (collection[i].name === itemName) {
-      collection.splice(i, 1);
-    }
-  }
-}
-
-function editItem() {
-  var itemName = document.getElementById("editItemName").value;
-  var newPrice = document.getElementById("editItemPrice").value;
-  var newQuantity = document.getElementById("editItemQuantity").value;
-
-  editItemInCollection(mensCollection, itemName, newPrice, newQuantity);
-  displayItems(mensCollection, "itemsContainer");
-}
-
-function editItemInCollection(collection, itemName, newPrice, newQuantity) {
-  for (var i = 0; i < collection.length; i++) {
-    if (collection[i].name === itemName) {
-      collection[i].price = newPrice;
-      collection[i].quantity = newQuantity;
-      return;
-    }
-  }
-}
-
-function searchItems() {
-  var search = document.getElementById("search").value;
-  var result = searchItem(mensCollection, search);
-  displayItems(result, "itemsContainer");
-}
-
-function searchItem(collection, search) {
-  return collection.filter(function (item) {
-    return item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
   });
 }
 
+// Show collection
+function showCollection(collectionName) {
+  var collection;
+  switch (collectionName) {
+    case "mensCollection":
+      collection = mensCollection;
+      break;
+    case "womensCollection":
+      collection = womensCollection;
+      break;
+    case "stockCollection":
+      collection = stockCollection;
+      break;
+    default:
+      collection = [];
+  }
+  displayItems(collection, "itemsContainer");
+}
+
+// Add item
+function addItem() {
+  var itemName = document.getElementById("addItemName").value;
+  var item = stockCollection.find(function (item) {
+    return item.name === itemName;
+  });
+  if (item) {
+    mensCollection.push(item);
+    displayItems(mensCollection, "itemsContainer");
+  } else {
+    alert("Item not found in stock collection.");
+  }
+}
+
+// Remove item
+function removeItem() {
+  var itemName = document.getElementById("removeItemName").value;
+  var index = mensCollection.findIndex(function (item) {
+    return item.name === itemName;
+  });
+  if (index !== -1) {
+    mensCollection.splice(index, 1);
+    displayItems(mensCollection, "itemsContainer");
+  } else {
+    alert("Item not found in men's collection.");
+  }
+}
+
+// Edit item
+function editItem() {
+  var itemName = document.getElementById("editItemName").value;
+  var newPrice = parseFloat(document.getElementById("editItemPrice").value);
+  var newQuantity = parseInt(document.getElementById("editItemQuantity").value);
+
+  var item = mensCollection.find(function (item) {
+    return item.name === itemName;
+  });
+  if (item) {
+    if (!isNaN(newPrice)) item.price = newPrice;
+    if (!isNaN(newQuantity)) item.quantity = newQuantity;
+    displayItems(mensCollection, "itemsContainer");
+  } else {
+    alert("Item not found in men's collection.");
+  }
+}
+
+// Search items
+function searchItems() {
+  var search = document.getElementById("search").value.toLowerCase();
+  var result = mensCollection.filter(function (item) {
+    return (
+      item.name.toLowerCase().includes(search) ||
+      item.description.toLowerCase().includes(search)
+    );
+  });
+  displayItems(result, "itemsContainer");
+}
+
+// Add to favorites
 function addToFavorites() {
   var itemName = document.getElementById("favoriteItemName").value;
-
-  for (var i = 0; i < mensCollection.length; i++) {
-    console.log(mensCollection[i]);
-
-    if (mensCollection[i].name === itemName) {
-      favoriteCollection.push(mensCollection[i]);
-      return;
+  var allItems = mensCollection.concat(womensCollection);
+  var item = allItems.find(function (item) {
+    return item.name === itemName;
+  });
+  if (item) {
+    var isAlreadyFavorite = favoriteCollection.some(function (favItem) {
+      return favItem.name === item.name;
+    });
+    if (!isAlreadyFavorite) {
+      favoriteCollection.push(item);
+      displayItems(favoriteCollection, "favoritesContainer");
+    } else {
+      alert("Item is already in favorites.");
     }
+  } else {
+    alert("Item not found in collections.");
   }
-
-  for (var j = 0; j < womensCollection.length; j++) {
-    if (womensCollection[j].name === itemName) {
-      favoriteCollection.push(womensCollection[j]);
-      return;
-    }
-  }
-  console.log(favoriteCollection);
-
-  displayItems(favoriteCollection, "favoritesContainer");
 }
+
+// Initial display
+showCollection("mensCollection");

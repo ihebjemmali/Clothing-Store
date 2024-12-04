@@ -4,66 +4,109 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fashion Shop</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header>
-      <h1>Fashion Shop</h1>
+      <nav class="top-nav">
+        <div class="logo">
+          <i class="fas fa-tshirt"></i>
+          <h1>Fashion Shop</h1>
+        </div>
+        <div class="nav-buttons">
+          <button onclick="showCollection('mensCollection')" class="nav-btn">
+            <i class="fas fa-male"></i> Men's
+          </button>
+          <button onclick="showCollection('womensCollection')" class="nav-btn">
+            <i class="fas fa-female"></i> Women's
+          </button>
+          <button onclick="showCollection('stockCollection')" class="nav-btn">
+            <i class="fas fa-box"></i> Stock
+          </button>
+        </div>
+      </nav>
     </header>
 
-    <nav>
-      <button onclick="showCollection('mensCollection')">
-        Men's Collection
-      </button>
-      <button onclick="showCollection('womensCollection')">
-        Women's Collection
-      </button>
-      <button onclick="showCollection('stockCollection')">
-        Stock Collection
-      </button>
-    </nav>
+    <main>
+      <section class="search-section">
+        <h2><i class="fas fa-search"></i> Search Items</h2>
+        <div class="search-container">
+          <input
+            type="text"
+            id="search"
+            placeholder="Search by name or description..."
+            oninput="searchItems()"
+          />
+        </div>
+      </section>
 
-    <section>
-      <h2>Search Items</h2>
-      <input type="text" id="search" placeholder="Search items" />
-      <button onclick="searchItems()">Search</button>
-    </section>
+      <section class="manage-items">
+        <h2><i class="fas fa-cogs"></i> Manage Items</h2>
+        <div class="manage-container">
+          <div class="manage-group">
+            <h3>Add Item</h3>
+            <input type="text" id="addItemName" placeholder="Item name" />
+            <button onclick="addItem()" class="action-btn">
+              <i class="fas fa-plus"></i> Add
+            </button>
+          </div>
 
-    <section>
-      <h2>Add Item</h2>
-      <input type="text" id="addItemName" placeholder="Enter item name" />
-      <button onclick="addItem()">Add Item</button>
-    </section>
+          <div class="manage-group">
+            <h3>Remove Item</h3>
+            <input type="text" id="removeItemName" placeholder="Item name" />
+            <button onclick="removeItem()" class="action-btn">
+              <i class="fas fa-trash"></i> Remove
+            </button>
+          </div>
 
-    <section>
-      <h2>Remove Item</h2>
-      <input type="text" id="removeItemName" placeholder="Enter item name" />
-      <button onclick="removeItem()">Remove Item</button>
-    </section>
+          <div class="manage-group">
+            <h3>Edit Item</h3>
+            <input type="text" id="editItemName" placeholder="Item name" />
+            <input type="number" id="editItemPrice" placeholder="New price" />
+            <input
+              type="number"
+              id="editItemQuantity"
+              placeholder="New quantity"
+            />
+            <button onclick="editItem()" class="action-btn">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+          </div>
 
-    <section>
-      <h2>Edit Item</h2>
-      <input type="text" id="editItemName" placeholder="Enter item name" />
-      <input type="number" id="editItemPrice" placeholder="Enter new price" />
-      <input
-        type="number"
-        id="editItemQuantity"
-        placeholder="Enter new quantity"
-      />
-      <button onclick="editItem()">Edit Item</button>
-    </section>
+          <div class="manage-group">
+            <h3>Add to Favorites</h3>
+            <input type="text" id="favoriteItemName" placeholder="Item name" />
+            <button onclick="addToFavorites()" class="action-btn">
+              <i class="fas fa-heart"></i> Add to Favorites
+            </button>
+          </div>
+        </div>
+      </section>
 
-    <section>
-      <h2>Add to Favorites</h2>
-      <input type="text" id="favoriteItemName" placeholder="Enter item name" />
-      <button onclick="addToFavorites()">Add to Favorites</button>
-    </section>
+      <section class="items-section">
+        <h2><i class="fas fa-clothes-hanger"></i> Items</h2>
+        <div id="itemsContainer"></div>
+      </section>
 
-    <section id="itemsContainer">
-      <h2>Items</h2>
-    </section>
-    <h2>Favorites</h2>
-    <section id="favoritesContainer"></section>
+      <section class="favorites-section">
+        <h2><i class="fas fa-heart"></i> Favorites</h2>
+        <div id="favoritesContainer"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Fashion Shop. All rights reserved.</p>
+    </footer>
+
     <script src="main.js"></script>
   </body>
 </html>
+//update
